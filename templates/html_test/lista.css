@@ -1,0 +1,67 @@
+body {
+   font-family: Arial, sans-serif;
+   background-image: radial-gradient(#007BFF,#555555);
+   color: #444;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+   margin: 0;
+}
+
+
+.container {
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    background: rgba(241, 237, 237, 0.4); /* Semi-transparent white background */
+    backdrop-filter: blur(8px); /* Frosted glass effect */
+}
+
+
+h1 {
+   text-align: center;
+   color: #ffffff;
+   margin-bottom: 20px;
+}
+
+
+.lista-de-tarefas {
+   list-style-type: none; /* Remove os marcadores de lista */
+   padding: 0;
+}
+
+
+.lista-de-tarefas li {
+   background: rgba(241, 237, 237, 0.9);
+   border: 1px solid #ddd;
+   border-radius: 5px;
+   padding: 15px;
+   margin-bottom: 10px;
+   transition: background-color 0.3s;
+}
+
+
+.lista-de-tarefas li:hover {
+   background-color: #d0d0d0;
+   font-weight: bold;
+}
+
+.link-home {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.link-home a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.link-home a:hover {
+    color: #5b5bfa;
+    transition: 0.1s;
+}
