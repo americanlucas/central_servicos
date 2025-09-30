@@ -1,9 +1,10 @@
 from flask import Flask, render_template
+from urls.adm.setor import bp_setor
 
 
 app = Flask(__name__)
 
-
+app.register_blueprint(bp_setor)
 
 
 @app.route('/')
