@@ -1,10 +1,13 @@
 from flask import Flask, render_template
+
+from urls.adm.servico import bp_serv
 from urls.adm.setor import bp_setor
 
 
 app = Flask(__name__)
 
 app.register_blueprint(bp_setor)
+app.register_blueprint(bp_serv)
 
 
 @app.route('/')
