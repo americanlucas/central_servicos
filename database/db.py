@@ -12,7 +12,7 @@ class Database:
    SCHEMA_DEFAULT = 'cs'
 
 
-   DB_URL = f"postgresql+psycopg://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}?options=-csearch_path%3D{SCHEMA_DEFAULT}"
+   DB_URL = f"postgresql+psycopg2://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}?options=-csearch_path%3D{SCHEMA_DEFAULT}"
 
 
    # Criar o mapeamento do banco de dados db_central_servico

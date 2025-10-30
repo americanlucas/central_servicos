@@ -74,3 +74,81 @@ def roda_consultar():
    dao_setor = SetorDAO()
    setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
    return render_template('adm/serv/consultar.html', servicos=servicos, setores=setores, filtro_usado=filtro_usado)
+
+@bp_serv.route('/atualizar')  # /adm/serv/atualizar
+def atualizar():
+   dao_setor = SetorDAO()
+   setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+   return render_template('adm/serv/atualizar.html', servicos=[], setores=setores, filtro_usado='')
+
+
+
+
+@bp_serv.route('/roda_atualizar', methods=['POST'])  # /adm/serv/rodar_atualizar
+def roda_atualizar():
+   nme_servico = request.form['nme_servico']
+   cod_setor = request.form['cod_setor']
+   filtros = []
+   if nme_servico:
+       filtros.append(('nme_servico', 'ilike', f'%{nme_servico}%'))
+   if cod_setor:
+       filtros.append(('cod_setor', '=', int(cod_setor)))
+   filtro_usado = f'Nome do Serviço: {nme_servico or "Não informado"} / Código do Setor: {cod_setor or "Todos"}'
+
+
+   dao = ServicoDAO()
+   servicos = dao.read_by_filters(filtros)
+
+
+   dao_setor = SetorDAO()
+   setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+   return render_template('adm/serv/atualizar.html', servicos=servicos, setores=setores, filtro_usado=filtro_usado)
+
+
+@bp_serv.route('/excluir/<int:idt>')
+def excluir(idt):
+   dao = ServicoDAO()
+   if dao.delete(idt):
+       msg = 'Serviço excluído com sucesso!'
+       css_msg = "sucesso"
+   else:
+       msg = 'Falha ao tentar excluir serviço! Verifique se existe alguma dependência!'
+       css_msg = "erro"
+   setor = dao.read_by_idt(idt)
+   return render_template('adm/serv/atualizar.html', msg=msg, css_msg=css_msg, setores=[], filtro_usado='')
+
+@bp_serv.route('/alterar/<int:idt>')  # /adm/serv/alterar/número
+def alterar(idt):
+   dao = ServicoDAO()
+   servico = dao.read_by_idt(idt)
+
+
+   dao_setor = SetorDAO()
+   setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+   return render_template('adm/serv/alterar.html', msg="", css_msg="", servico=servico, setores=setores)
+
+
+@bp_serv.route('/salva_alterar', methods=['POST'])  # /adm/setor/alterar/número
+def salva_alterar():
+   dao = ServicoDAO()
+   servico = dao.read_by_idt(int(request.form['idt_servico']))
+   servico.nme_servico = request.form['nme_servico']
+   servico.num_dias_servico = int(request.form['num_dias_servico'])
+   servico.vlr_servico = float(request.form['vlr_servico'])
+   servico.txt_modelo_servico = request.form['txt_modelo_servico']
+   servico.sts_servico = request.form['sts_servico']
+   servico.cod_setor = request.form['cod_setor']
+   if dao.update(servico):
+       msg = 'Serviçõ alterado com sucesso!'
+       css_msg = "sucesso"
+   else:
+       msg = 'Falha ao tentar alterar serviço!'
+       css_msg = "erro"
+
+
+   dao_setor = SetorDAO()
+   setores = dao_setor.read_by_filters([('sts_setor', '=', 'A')])
+
+
+   return render_template('adm/serv/alterar.html', msg=msg, css_msg=css_msg, servico=servico, setores=setores)
+
