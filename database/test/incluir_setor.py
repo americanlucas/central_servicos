@@ -1,7 +1,6 @@
 from database.setor_dao import SetorDAO
 
 print("Incluir novo setor")
-
 sigla = input("Qual a sigla do setor? ")
 nome = input("Qual o nome do setor? ")
 email = input("Qual o email do setor? ")

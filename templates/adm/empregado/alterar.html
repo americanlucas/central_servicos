@@ -1,0 +1,68 @@
+{% extends "adm/base_adm.html" %}
+
+{% block title %}Alterar Empregado{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">Alterar Empregado</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('empregado.atualizar') }}">
+                        <input type="hidden" name="id_empregado" value="{{ empregado.id_empregado }}">
+                        
+                        <div class="mb-3">
+                            <label for="nome_empregado" class="form-label">Nome do Empregado *</label>
+                            <input type="text" class="form-control" id="nome_empregado" 
+                                   name="nome_empregado" value="{{ empregado.nome_empregado }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="cpf_empregado" class="form-label">CPF *</label>
+                            <input type="text" class="form-control" id="cpf_empregado" 
+                                   name="cpf_empregado" value="{{ empregado.cpf_empregado }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email_empregado" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="email_empregado" 
+                                   name="email_empregado" value="{{ empregado.email_empregado or '' }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="telefone_empregado" class="form-label">Telefone</label>
+                            <input type="text" class="form-control" id="telefone_empregado" 
+                                   name="telefone_empregado" value="{{ empregado.telefone_empregado or '' }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="id_setor" class="form-label">Setor</label>
+                            <select class="form-select" id="id_setor" name="id_setor">
+                                <option value="">Selecione um setor</option>
+                                {% for setor in setores %}
+                                <option value="{{ setor.id_setor }}" 
+                                        {% if empregado.id_setor == setor.id_setor %}selected{% endif %}>
+                                    {{ setor.nome_setor }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('empregado.consultar') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Voltar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Atualizar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

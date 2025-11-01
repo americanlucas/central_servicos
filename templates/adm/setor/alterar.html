@@ -10,7 +10,7 @@
                    <label for="idt_setor">Identificador do Setor:</label>
                    <input type="text" id="idt_setor" name="idt_setor" value="{{ setor.idt_setor }}" readonly>
                </div>
-
+              
                <div class="form-group">
                    <label for="sgl_setor">Sigla do Setor:</label>
                    <input type="text" id="sgl_setor" name="sgl_setor" maxlength="10" value="{{ setor.sgl_setor }}" required>
@@ -27,10 +27,10 @@
                    <label>Status:</label>
                    <div class="radio-group">
                        <label for="sts_ativo">
-                           <input type="radio" id="sts_ativo" name="sts_setor" value="A" required {% if setor.sts_setor =="A" %}checked{% endif %}> Ativo (Disponível para uso)
+                           <input type="radio" id="sts_ativo" name="sts_setor" value="A" required {% if setor.sts_setor == 'A' %}checked{% endif %}> Ativo (Disponível para uso)
                        </label>
                        <label for="sts_inativo">
-                           <input type="radio" id="sts_inativo" name="sts_setor" value="I" required {% if setor.sts_setor =='I' %}checked{% endif %}> Inativo
+                           <input type="radio" id="sts_inativo" name="sts_setor" value="I" required {% if setor.sts_setor == 'I' %}checked{% endif %}> Inativo
                        </label>
                    </div>
                </div>

@@ -1,0 +1,71 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+
+       <section class="form-section">
+           <h2>Atualizar e Gerenciar Tipos de Ocorrência</h2>
+           <form id="atualizarForm" class="consultar-form" action="/adm/tipo_ocorrencia/roda_atualizar" method="POST">
+               <div class="form-group">
+                   <label for="nme_tipo_ocorrencia">Nome do Tipo de Ocorrência:</label>
+                   <input type="text" id="nme_tipo_ocorrencia" name="nme_tipo_ocorrencia" placeholder="Digite o nome do tipo de ocorrência para filtrar">
+               </div>
+               <button type="submit" class="btn btn-primary">Buscar</button>
+           </form>
+           <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+       </section>
+
+
+       <section class="table-section">
+           <p>Total de registros encontrados: <strong>{{ tipos | length }}</strong></p>
+           <div class="table-container">
+               <table id="tiposTable" class="data-table">
+                   <thead>
+                       <tr>
+                           <th>ID</th>
+                           <th>Nome</th>
+                           <th>Tipo</th>
+                           <th>Status</th>
+                           <th>Modelo</th>
+                           <th>Ações</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       {% for tipo in tipos %}
+                       <tr>
+                           <td>{{ tipo.idt_tipo_ocorrencia }}</td>
+                           <td>{{ tipo.nme_tipo_ocorrencia }}</td>
+                           <td>{{ "Empregado" if tipo.tpo_tipo_ocorrencia == 'E' else "Prestador" }}</td>
+                           <td>{{ "Ativo" if tipo.sts_tipo_ocorrencia == 'A' else "Inativo" }}</td>
+                           <td>{{ tipo.txt_modelo_ocorrencia[:30] }}...</td>
+                           <td class="action-buttons">
+                               <button class="btn btn-edit" onclick="window.open('/adm/tipo_ocorrencia/alterar/{{ tipo.idt_tipo_ocorrencia }}', '_self')">Alterar</button>
+                               <button class="btn btn-delete" onclick="confirmar({{ tipo.idt_tipo_ocorrencia }}, '{{ tipo.nme_tipo_ocorrencia }}')">Excluir</button>
+                           </td>
+                       </tr>
+                       {% else %}
+                       <tr>
+                           <td colspan="6">Nenhum tipo de ocorrência encontrado.</td>
+                       </tr>
+                       {% endfor %}
+                   </tbody>
+               </table>
+           </div>
+           {% if filtro_usado %}
+           <div class="filter-footer">
+               <p>Filtro usado: <strong>{{ filtro_usado }}</strong></p>
+           </div>
+           {% endif %}
+       </section>
+
+{% endblock %}
+
+
+{% block script %}
+   function confirmar(idt, nme){
+       retorno = confirm('Confirma a exclusão do tipo de ocorrência: ' + nme + ' ?');
+       if (retorno){
+          window.open('/adm/tipo_ocorrencia/excluir/' + idt, '_self');
+       }
+   }
+{% endblock %}

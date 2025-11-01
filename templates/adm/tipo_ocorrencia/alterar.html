@@ -1,0 +1,50 @@
+{% extends "adm/base_adm.html" %}
+
+
+{% block content %}
+   <main>
+       <section class="form-section">
+           <h2>Alterar Ocorrência</h2>
+           <form id="ocorrenciaForm" method="POST" action="/adm/tipo_ocorrencia/salva_alterar">
+               <div class="form-group">
+                   <label for="idt_tipo_ocorrencia">Identificador do Setor:</label>
+                   <input type="text" id="idt_tipo_ocorrencia" name="idt_tipo_ocorrencia" value="{{ ocorrencia.idt_tipo_ocorrencia }}" readonly>
+               </div>
+              
+               <div class="form-group">
+                   <label for="nme_tipo_ocorrencia">Nome da Ocorrencia:</label>
+                   <input type="text" id="nme_tipo_ocorrencia" name="nme_tipo_ocorrencia" maxlength="50" value="{{ ocorrencia.nme_tipo_ocorrencia }}" required>
+               </div>
+               <div class="form-group">
+                   <label for="txt_modelo_ocorrencia">Descrição:</label>
+                   <textarea type="text" id="txt_modelo_ocorrencia" name="txt_modelo_ocorrencia" maxlength="50" value="{{ ocorrencia.txt_modelo_ocorrencia }}" required></textarea>
+               </div>
+               <div class="form-group">
+                   <label>Status:</label>
+                   <div class="radio-group">
+                       <label for="tpo_tipo_ocorrencia_empregado">
+                           <input type="radio" id="tpo_tipo_ocorrencia_empregado" name="tpo_tipo_ocorrencia" value="E" required checked> Ocorrência Para Solicitantes
+                       </label>
+                       <label for="tpo_tipo_ocorrencia_prestador">
+                           <input type="radio" id="tpo_tipo_ocorrencia_prestador" name="tpo_tipo_ocorrencia" value="P" required> Ocorrência para Prestadores
+                       </label>
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label>Status:</label>
+                   <div class="radio-group">
+                       <label for="sts_ativo">
+                           <input type="radio" id="sts_ativo" name="sts_tipo_ocorrencia" value="A" required checked> Ativo (Disponível para uso)
+                       </label>
+                       <label for="sts_inativo">
+                           <input type="radio" id="sts_inativo" name="sts_tipo_ocorrencia" value="I" required> Inativo
+                       </label>
+                   </div>
+               </div>
+               <button type="submit" class="btn btn-primary">Alterar</button>
+               <button type="reset" class="btn btn-secondary">Recompor</button>
+           </form>
+           <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+       </section>
+   </main>
+{% endblock %}
