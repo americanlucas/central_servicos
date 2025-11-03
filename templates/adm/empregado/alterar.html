@@ -288,12 +288,8 @@ input:focus, select:focus, textarea:focus {
                    <input type="password" id="pwd_empregado" name="pwd_empregado" maxlength="128" value={{empregado.pwd_empregado}}>
                </div>
                <div class="form-group">
-                   <label for="cod_local">Local:</label>
-                   <select id="cod_local" name="cod_local" required>
-                       {% for local in lst_locais %}
-                           <option value="{{ local.idt_local }}">{{ local.nme_local }}</option>
-                       {% endfor %}
-                   </select>
+                   <label for="cod_local">Código do Local:</label>
+                   <input id="cod_local" name="cod_local" value={{empregado.cod_local}} readonly>
                </div>
                <div class="form-group">
                    <label>Status:</label>

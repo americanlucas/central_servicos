@@ -258,11 +258,11 @@ input:focus, select:focus, textarea:focus {
 
 {% block content %}
        <section class="form-section">
-           <h2>Incluir Novo Prestador</h2>
+           <h2>Alterar Prestador</h2>
            <form id="prestadorForm" method="POST" action="/adm/prestador/salva_alterar">
                <div class="form-group">
                    <label for="idt_prestador">Identificador do Prestador:</label>
-                   <input type="text" id="idt_prestador" name="idt_prestador" value="{{ prestador.idt_prestador }}" readonly value={{prestador.idt_prestador}}>
+                   <input type="text" id="idt_prestador" name="idt_prestador" value="{{ prestador.idt_prestador }}" readonly >
                </div>
                <div class="form-group">
                    <label for="mat_prestador">Matrícula:</label>
@@ -290,11 +290,7 @@ input:focus, select:focus, textarea:focus {
                </div>
                <div class="form-group">
                    <label for="cod_setor">Setor:</label>
-                   <select id="cod_setor" name="cod_setor" required>
-                       {% for setor in lst_setores %}
-                           <option value="{{ setor.idt_setor }}">{{ setor.sgl_setor }}-{{ setor.nme_setor }}</option>
-                       {% endfor %}
-                   </select>
+                   <input type="text" id="cod_setor" name="cod_setor" value="{{ prestador.cod_setor }}" readonly >
                </div>
                <div class="form-group">
                    <label>Status:</label>

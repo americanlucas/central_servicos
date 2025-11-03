@@ -71,7 +71,8 @@ def alterar(idt):
 @local_bp.route('/salva_alterar', methods=['POST'])  # /adm/local/alterar/número
 def salva_alterar():
    dao = LocalDAO()
-   local = dao.read_by_idt(int(request.form['idt_local']))
+   idt_local = int(request.form.get('idt_local'))
+   local = dao.read_by_idt(idt_local)
 
    local.nme_local = request.form['nme_local']
    local.lat_local = request.form['lat_local']

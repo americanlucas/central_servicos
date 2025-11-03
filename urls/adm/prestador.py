@@ -45,7 +45,7 @@ def consultar():
 @prestador_bp.route('/roda_consultar', methods=['POST'])
 def roda_consultar():
     nme_prestador = request.form["nme_prestador"]
-    filtro_usado = f"Nome do Empregado: {nme_prestador}"
+    filtro_usado = f"Nome do Prestador: {nme_prestador}"
     dao = PrestadorDAO()
     prestador = dao.read_by_like("nme_prestador", nme_prestador)
 
@@ -78,7 +78,8 @@ def alterar(idt):
 @prestador_bp.route('/salva_alterar', methods=['POST'])
 def salva_alterar():
     dao = PrestadorDAO()
-    prestador = dao.new_object()
+    idt_prestador = int(request.form.get('idt_prestador'))
+    prestador = dao.read_by_idt(idt_prestador)
     setor_dao = SetorDAO()
     lst_setores = setor_dao.read_by_filters([('sts_setor', '=', 'A')])
 
