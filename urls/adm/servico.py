@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect
 
 from database.setor_dao import SetorDAO
 from database.servico_dao import ServicoDAO
@@ -99,7 +99,9 @@ def excluir(idt):
         msg = 'Falha ao tentar excluir serviço! Verifique se existe alguma dependência!'
         css_msg = "erro"
     setor = dao.read_by_idt(idt)
-    return render_template('adm/serv/atualizar.html', msg=msg, css_msg=css_msg, setores=[], filtro_usado='')
+
+    return redirect('/adm/serv/atualizar')
+    #return render_template('adm/serv/atualizar.html', msg=msg, css_msg=css_msg, setores=[], filtro_usado='')
 
 @bp_serv.route('/alterar/<int:idt>')  # /adm/serv/alterar/número
 def alterar(idt):

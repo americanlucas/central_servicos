@@ -28,7 +28,7 @@ def salvar_incluir():
     prestador.cod_setor = request.form['cod_setor']
 
     if dao.insert(prestador):
-        msg = f"Prestador número {prestador.idt_prestador} inserido com sucesso"
+        msg = f"Prestador {prestador.nme_prestador} inserido com sucesso"
         css_msg = "sucesso"
     else:
         msg = f"Erro ao tentar incluir prestador!"
@@ -70,13 +70,17 @@ def roda_atualizar():
 def alterar(idt):
     dao = PrestadorDAO()
     prestador = dao.read_by_idt(idt)
+    setor_dao = SetorDAO()
+    lst_setores = setor_dao.read_by_filters([('sts_setor', '=', 'A')])
 
-    return render_template('adm/prestador/alterar.html', prestador=prestador, msg='', css_msg='')
+    return render_template('adm/prestador/alterar.html', prestador=prestador, msg='', css_msg='', lst_setores=lst_setores)
 
 @prestador_bp.route('/salva_alterar', methods=['POST'])
 def salva_alterar():
     dao = PrestadorDAO()
     prestador = dao.new_object()
+    setor_dao = SetorDAO()
+    lst_setores = setor_dao.read_by_filters([('sts_setor', '=', 'A')])
 
     prestador.mat_prestador = request.form.get('mat_prestador', '')
     prestador.nme_prestador = request.form['nme_prestador']
@@ -88,13 +92,13 @@ def salva_alterar():
     prestador.cod_setor = request.form['cod_setor']
 
     if dao.update(prestador):
-        msg = f'Prestador {prestador.idt_prestador} alterado com sucesso'
+        msg = f'Prestador {prestador.nme_prestador} alterado com sucesso'
         css_msg = 'sucesso'
     else:
         msg = "Falha ao tentar alterar prestador!"
         css_msg = "erro"
 
-    return render_template('adm/prestador/alterar.html', msg=msg, css_msg=css_msg, prestador=prestador)
+    return render_template('adm/prestador/alterar.html', msg=msg, css_msg=css_msg, prestador=prestador, lst_setores=lst_setores)
 
 @prestador_bp.route('/excluir/<int:idt>')
 def excluir(idt):
@@ -106,5 +110,6 @@ def excluir(idt):
         msg = 'Falha ao tentar excluir prestador! Verifique se existe alguma dependência!'
         css_msg = "erro"
 
-    return render_template('adm/prestador/atualizar.html', msg=msg, css_msg=css_msg, prestadores=[], filtro_usado='')
+    return redirect('/adm/prestador/atualizar')
+    # return render_template('adm/prestador/atualizar.html', msg=msg, css_msg=css_msg, prestadores=[], filtro_usado='')
 

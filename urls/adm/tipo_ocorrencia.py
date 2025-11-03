@@ -19,7 +19,7 @@ def salvar_incluir():
     tipo_ocorrencia.txt_modelo_ocorrencia = request.form['txt_modelo_ocorrencia']
 
     if dao.insert(tipo_ocorrencia):
-        msg = f"Tipo de Ocorrência número {tipo_ocorrencia.idt_tipo_ocorrencia} inserido com sucesso!"
+        msg = f"Ocorrência número {tipo_ocorrencia.idt_tipo_ocorrencia} inserido com sucesso!"
         css_msg = "sucesso"
     else:
         msg = "Erro ao tentar incluir tipo de ocorrência!"
@@ -66,7 +66,8 @@ def excluir(idt):
         msg = 'Falha ao tentar excluir tipo de ocorrência! Verifique se existe alguma dependência!'
         css_msg = "erro"
 
-    return render_template('adm/tipo_ocorrencia/atualizar.html', msg=msg, css_msg=css_msg, tipos=[], filtro_usado='')
+    return redirect('/adm/tipo_ocorrencia/atualizar')
+    # return render_template('adm/tipo_ocorrencia/atualizar.html', msg=msg, css_msg=css_msg, tipos=[], filtro_usado='')
 
 
 @tipo_ocorrencia_bp.route('/alterar/<int:idt>')  # /adm/tipo_ocorrencia/alterar/número

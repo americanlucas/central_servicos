@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect
 from database.setor_dao import SetorDAO
 
 bp_setor = Blueprint('setor', __name__, url_prefix='/adm/setor')
@@ -18,7 +18,7 @@ def salvar_incluir():
     setor.eml_setor = request.form['eml_setor']
     setor.sts_setor = request.form['sts_setor']
     if dao.insert(setor):
-        msg = f"Setor número {setor.idt_setor} inserido com sucesso!"
+        msg = f"Setor {setor.nme_setor} inserido com sucesso!"
         css_msg = "sucesso"
     else:
         msg = "Erro ao tentar incluir setor!"
@@ -55,7 +55,7 @@ def roda_atualizar():
     return render_template('adm/setor/atualizar.html', setores=setores, filtro_usado=filtro_usado)
 
 
-@bp_setor.route('/excluir/<int:idt>')
+@bp_setor.route('/excluir/<int:idt>') #
 def excluir(idt):
     dao = SetorDAO()
     if dao.delete(idt):
@@ -65,7 +65,8 @@ def excluir(idt):
         msg = 'Falha ao tentar excluir setor! Verifique se existe alguma dependência!'
         css_msg = "erro"
 
-    return render_template('adm/setor/atualizar.html', msg=msg, css_msg=css_msg, setores=[], filtro_usado='')
+    return redirect('/adm/setor/atualizar')
+    # return render_template('adm/setor/atualizar.html', msg=msg, css_msg=css_msg, setores=[], filtro_usado='')
 
 @bp_setor.route('/alterar/<int:idt>')  # /adm/setor/alterar/número
 def alterar(idt):
@@ -81,7 +82,7 @@ def salva_alterar():
    setor.eml_setor = request.form['eml_setor']
    setor.sts_setor = request.form['sts_setor']
    if dao.update(setor):
-       msg = 'Setor alterado com sucesso!'
+       msg = f'Setor {setor.sgl_setor} alterado com sucesso!'
        css_msg = "sucesso"
    else:
        msg = 'Falha ao tentar alterar setor!'

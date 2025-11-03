@@ -24,7 +24,7 @@ def salvar_incluir():
     local.sts_local = request.form['sts_local']
     local.cod_setor = request.form['cod_setor']
     if dao.insert(local):
-        msg = f"Local número {local.idt_local} inserido com sucesso!"
+        msg = f"Local {local.nme_local} inserido com sucesso!"
         css_msg = "sucesso"
     else:
         msg = "Erro ao tentar incluir local!"
@@ -64,19 +64,22 @@ def roda_atualizar():
 def alterar(idt):
    dao = LocalDAO()
    local = dao.read_by_idt(idt)
-   return render_template('adm/local/alterar.html', msg="", css_msg="", local=local)
+   setor_dao = SetorDAO()
+   lst_setores = setor_dao.read_all()
+   return render_template('adm/local/alterar.html', msg="", css_msg="", local=local, lst_setores=lst_setores)
 
 @local_bp.route('/salva_alterar', methods=['POST'])  # /adm/local/alterar/número
 def salva_alterar():
    dao = LocalDAO()
    local = dao.read_by_idt(int(request.form['idt_local']))
+
    local.nme_local = request.form['nme_local']
    local.lat_local = request.form['lat_local']
    local.lgt_local = request.form['lgt_local']
    local.sts_local = request.form['sts_local']
    local.cod_setor = request.form['cod_setor']
    if dao.update(local):
-       msg = 'Local alterado com sucesso!'
+       msg = f'Local {local.nme_local} alterado com sucesso!'
        css_msg = "sucesso"
    else:
        msg = 'Falha ao tentar alterar local!'
@@ -96,4 +99,5 @@ def excluir(idt):
         msg = 'Falha ao tentar excluir local! Verifique se existe alguma dependência!'
         css_msg = "erro"
 
-    return render_template('adm/local/atualizar.html', msg=msg, css_msg=css_msg, locais=[], filtro_usado='')
+    return redirect('/adm/local/atualizar')
+    # return render_template('adm/local/atualizar.html', msg=msg, css_msg=css_msg, locais=[], filtro_usado='')

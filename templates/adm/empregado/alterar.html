@@ -1,68 +1,314 @@
 {% extends "adm/base_adm.html" %}
+{% block styles %}
+<style>
+    /* Reset básico e tipografia */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    background-color: #f4f7f9;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos do cabeçalho (header) */
+header {
+    background-color: #1e3a8a;
+    color: #fff;
+    padding: 20px;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service-title {
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.user-profile a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.user-profile a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos do conteúdo principal (main) */
+main {
+    flex: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    width: 100%;
+}
+
+/* Estilos do rodapé (footer) */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+footer nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+    border: 1px solid lightblue;
+    border-radius: 20px;
+    padding: 10px;
+    color: lightblue;
+}
+
+footer p {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #ccc;
+}
+
+/* Estilos específicos do formulário */
+.form-section {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    color: #1e3a8a;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.6s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border: 2px solid blue;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.6s, transform 0.4s;
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background-color: #1e3a8a;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #1c337a;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: #e5e7eb;
+    color: #4b5563;
+}
+
+.btn-secondary:hover {
+    background-color: #d1d5db;
+    transform: translateY(-2px);
+}
+
+.btn-edit{
+    background-color: lightgreen;
+    transition: background-color 1s ease;
+}
+
+.btn-edit:hover{
+    background-color: darkgreen;
+}
+
+.btn-delete{
+    background-color: lightsalmon;
+    transition: background-color 1s ease;
+}
+
+.btn-delete:hover{
+    background-color: darkred;
+}
+
+/* Estilo para a mensagem de retorno */
+.mensagem-retorno {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.sucesso {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: green;
+}
+
+.erro {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: red;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+}
+
+.radio-group input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+/* Estilos para a tabela de dados */
+.table-container {
+    overflow-x: auto; /* Garante que a tabela seja responsiva */
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.data-table th, .data-table td {
+    padding: 12px;
+    border-bottom: 1px solid lightblue;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #f9fafb;
+    font-weight: 700;
+}
+
+.data-table tbody tr:hover {
+    background-color: lightskyblue;
+}
+
+/* Estilo para o rodapé do filtro */
+.filter-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.filter-footer strong {
+    color: #333;
+}
+</style>
+{% endblock %}
 
 {% block title %}Alterar Empregado{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-header bg-warning text-dark">
-                    <h4 class="mb-0">Alterar Empregado</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ url_for('empregado.atualizar') }}">
-                        <input type="hidden" name="id_empregado" value="{{ empregado.id_empregado }}">
-                        
-                        <div class="mb-3">
-                            <label for="nome_empregado" class="form-label">Nome do Empregado *</label>
-                            <input type="text" class="form-control" id="nome_empregado" 
-                                   name="nome_empregado" value="{{ empregado.nome_empregado }}" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="cpf_empregado" class="form-label">CPF *</label>
-                            <input type="text" class="form-control" id="cpf_empregado" 
-                                   name="cpf_empregado" value="{{ empregado.cpf_empregado }}" required>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="email_empregado" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" id="email_empregado" 
-                                   name="email_empregado" value="{{ empregado.email_empregado or '' }}">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="telefone_empregado" class="form-label">Telefone</label>
-                            <input type="text" class="form-control" id="telefone_empregado" 
-                                   name="telefone_empregado" value="{{ empregado.telefone_empregado or '' }}">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="id_setor" class="form-label">Setor</label>
-                            <select class="form-select" id="id_setor" name="id_setor">
-                                <option value="">Selecione um setor</option>
-                                {% for setor in setores %}
-                                <option value="{{ setor.id_setor }}" 
-                                        {% if empregado.id_setor == setor.id_setor %}selected{% endif %}>
-                                    {{ setor.nome_setor }}
-                                </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ url_for('empregado.consultar') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Voltar
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Atualizar
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+       <section class="form-section">
+           <h2>Alterar Empregado</h2>
+           <form id="empregadoForm" method="POST" action="/adm/empregado/salva_alterar">
+               <div class="form-group">
+                   <label for="idt_empregado">Identificador do Empregado:</label>
+                   <input type="text" id="idt_empregado" name="idt_empregado" value="{{ empregado.idt_empregado }}" readonly>
+               </div>
+               <div class="form-group">
+                   <label for="mat_empregado">Matrícula:</label>
+                   <input type="text" id="mat_empregado" name="mat_empregado" maxlength="20" required value={{empregado.mat_empregado}}>
+               </div>
+               <div class="form-group">
+                   <label for="nme_empregado">Nome do Empregado:</label>
+                   <input type="text" id="nme_empregado" name="nme_empregado" maxlength="50" required value={{empregado.nme_empregado}}>
+               </div>
+               <div class="form-group">
+                   <label for="eml_empregado">Email:</label>
+                   <input type="email" id="eml_empregado" name="eml_empregado" maxlength="50" required value={{empregado.eml_empregado}}>
+               </div>
+               <div class="form-group">
+                   <label for="tel_empregado">Telefone:</label>
+                   <input type="text" id="tel_empregado" name="tel_empregado" maxlength="20" value={{empregado.tel_empregado}}>
+               </div>
+               <div class="form-group">
+                   <label for="rml_empregado">Ramal:</label>
+                   <input type="text" id="rml_empregado" name="rml_empregado" maxlength="10" value={{empregado.rml_empregado}}>
+               </div>
+               <div class="form-group">
+                   <label for="pwd_empregado">Senha:</label>
+                   <input type="password" id="pwd_empregado" name="pwd_empregado" maxlength="128" value={{empregado.pwd_empregado}}>
+               </div>
+               <div class="form-group">
+                   <label for="cod_local">Local:</label>
+                   <select id="cod_local" name="cod_local" required>
+                       {% for local in lst_locais %}
+                           <option value="{{ local.idt_local }}">{{ local.nme_local }}</option>
+                       {% endfor %}
+                   </select>
+               </div>
+               <div class="form-group">
+                   <label>Status:</label>
+                   <div class="radio-group">
+                       <label for="sts_ativo">
+                           <input type="radio" id="sts_ativo" name="sts_empregado" value="A" required checked> Ativo
+                       </label>
+                       <label for="sts_inativo">
+                           <input type="radio" id="sts_inativo" name="sts_empregado" value="I" required> Inativo
+                       </label>
+                   </div>
+               </div>
+               <button type="submit" class="btn btn-primary">Salvar</button>
+               <button type="reset" class="btn btn-secondary">Limpar</button>
+           </form>
+           <div id="mensagem" class="mensagem-retorno {{ css_msg }}">{{ msg }}</div>
+       </section>
 {% endblock %}

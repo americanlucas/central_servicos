@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from database.empregado_dao import EmpregadoDAO
 from database.local_dao import LocalDAO
+from database.setor_dao import SetorDAO
 
 empregado_bp = Blueprint('empregado', __name__, url_prefix='/adm/empregado')
 
@@ -28,7 +29,7 @@ def salvar_incluir():
     empregado.pwd_empregado = request.form.get('pwd_empregado', '')
     empregado.cod_local = request.form['cod_local']
     if dao.insert(empregado):
-        msg = f"Empregado {empregado.idt_empregado} inserido com sucesso!"
+        msg = f"Empregado {empregado.nme_empregado} inserido com sucesso!"
         css_msg = 'sucesso'
     else:
         msg = "Erro ao tentar incluir empregado!"
@@ -59,16 +60,19 @@ def alterar(idt):
     empregado = dao.read_by_idt(idt)
 
     # Busca setores para o dropdown
-    setor_dao = SetorDAO()
-    setores = setor_dao.read_by_filters([('sts_setor', '=', 'A')])
+    local_dao = LocalDAO()
+    lst_locais = local_dao.read_all()
 
-    return render_template('adm/empregado/alterar.html', empregado=empregado, setores=setores)
+    return render_template('adm/empregado/alterar.html', empregado=empregado, lst_locais=lst_locais)
 
-@empregado_bp.route('/salva_alterar')
+@empregado_bp.route('/salva_alterar', methods=['POST'])
 def salva_alterar():
     dao = EmpregadoDAO()
     empregado = dao.read_by_idt(int(request.form['idt_empregado']))
+    local_dao = LocalDAO()
+    lst_locais = local_dao.read_all()
 
+    empregado.idt_empregado = request.form['idt_empregado']
     empregado.eml_empregado = request.form['eml_empregado']
     empregado.mat_empregado = request.form['mat_empregado']
     empregado.nme_empregado = request.form['nme_empregado']
@@ -85,7 +89,7 @@ def salva_alterar():
         msg = f"Falha ao tentar alterar prestador!"
         css_msg = f"erro"
 
-    return render_template('adm/empregado/alterar.html', msg=msg, css_msg=css_msg, empregado=empregado)
+    return render_template('adm/empregado/alterar.html', msg=msg, css_msg=css_msg, empregado=empregado, lst_locais=lst_locais)
 
 
 @empregado_bp.route('/atualizar')  # /adm/empregado/atualizar
@@ -115,4 +119,5 @@ def excluir(idt):
         msg = 'Falha ao tentar excluir empregado! Verifique se existe alguma dependência!'
         css_msg = "erro"
 
-    return render_template('adm/empregado/alterar.html', msg=msg, css_msg=css_msg, empregado=[], filtro_usado='')
+    return redirect('/adm/empregado/atualizar')
+    #return render_template('adm/empregado/alterar.html', msg=msg, css_msg=css_msg, empregado=[], filtro_usado='')

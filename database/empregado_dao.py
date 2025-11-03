@@ -4,4 +4,4 @@ from database.model_dao import DAO
 
 class EmpregadoDAO(DAO):
     def __init__(self):
-        super().__init__("tb_empregado", "id_empregado")
+        super().__init__("tb_empregado", "idt_empregado")
