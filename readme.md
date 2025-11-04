@@ -34,7 +34,7 @@ python -m venv venv
 
 ```
 
-Estrutura do Projeto
+## Estrutura do Projeto
 
 ```text
 central_servicos/
@@ -44,4 +44,5 @@ central_servicos/
 ├── static/
 ├── urls/
 └── README.md
+
 ```
