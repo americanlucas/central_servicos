@@ -36,7 +36,7 @@ def consultar():
 @tipo_ocorrencia_bp.route('/roda_consultar', methods=['POST'])  # /adm/tipo_ocorrencia/roda_consultar
 def roda_consultar():
     nme_tipo_ocorrencia = request.form['nme_tipo_ocorrencia']
-    filtro_usado = f'Nome do Tipo de Ocorrência: {nme_tipo_ocorrencia}'
+    filtro_usado = f'Nome do Tipo de Ocorrência: {nme_tipo_ocorrencia or "Não informado"}'
     dao = TipoOcorrenciaDAO()
     tipos = dao.read_by_like('nme_tipo_ocorrencia', nme_tipo_ocorrencia)
     return render_template('adm/tipo_ocorrencia/consultar.html', tipos=tipos, filtro_usado=filtro_usado)
@@ -50,7 +50,7 @@ def atualizar():
 @tipo_ocorrencia_bp.route('/roda_atualizar', methods=['POST'])  # /adm/tipo_ocorrencia/rodar_atualizar
 def roda_atualizar():
     nme_tipo_ocorrencia = request.form['nme_tipo_ocorrencia']
-    filtro_usado = f'Nome do Tipo de Ocorrência: {nme_tipo_ocorrencia}'
+    filtro_usado = f'Nome do Tipo de Ocorrência: {nme_tipo_ocorrencia or "Não informado"}'
     dao = TipoOcorrenciaDAO()
     tipos = dao.read_by_like('nme_tipo_ocorrencia', nme_tipo_ocorrencia)
     return render_template('adm/tipo_ocorrencia/atualizar.html', tipos=tipos, filtro_usado=filtro_usado)

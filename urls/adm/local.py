@@ -40,7 +40,7 @@ def consultar():
 @local_bp.route('/roda_consultar', methods=['POST'])
 def roda_consultar():
     nme_local = request.form['nme_local']
-    filtro_usado = f'Nome do Local: {nme_local}'
+    filtro_usado = f'Nome do Local: {nme_local or "Não informado"}'
     dao = LocalDAO()
     locais = dao.read_by_like('nme_local', nme_local)
     return render_template('adm/local/consultar.html', locais=locais, filtro_usado=filtro_usado)
@@ -53,7 +53,7 @@ def atualizar():
 @local_bp.route('/roda_atualizar', methods=['POST'])  # /adm/local/rodar_atualizar
 def roda_atualizar():
     nme_local = request.form['nme_local']
-    filtro_usado = f'Nome do Local: {nme_local}'
+    filtro_usado = f'Nome do Local: {nme_local or "Não informado"}'
     dao = LocalDAO()
     locais = dao.read_by_like('nme_local', nme_local)
     return render_template('adm/local/atualizar.html', locais=locais, filtro_usado=filtro_usado)

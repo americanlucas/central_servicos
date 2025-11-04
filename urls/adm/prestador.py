@@ -45,7 +45,7 @@ def consultar():
 @prestador_bp.route('/roda_consultar', methods=['POST'])
 def roda_consultar():
     nme_prestador = request.form["nme_prestador"]
-    filtro_usado = f"Nome do Prestador: {nme_prestador}"
+    filtro_usado = f'Nome do Prestador: {nme_prestador or "Não informado"}'
     dao = PrestadorDAO()
     prestador = dao.read_by_like("nme_prestador", nme_prestador)
 
@@ -59,7 +59,7 @@ def atualizar():
 @prestador_bp.route('/roda_atualizar', methods=['POST'])  # /adm/prestador/rodar_atualizar
 def roda_atualizar():
     nme_prestador = request.form['nme_prestador']
-    filtro_usado = f'Nome do Prestador: {nme_prestador}'
+    filtro_usado = f'Nome do Prestador: {nme_prestador or "Não informado"}'
     dao = PrestadorDAO()
     prestadores = dao.read_by_like('nme_prestador', nme_prestador)
     return render_template('adm/prestador/atualizar.html', prestadores=prestadores, filtro_usado=filtro_usado)

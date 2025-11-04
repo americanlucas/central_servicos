@@ -269,8 +269,15 @@ input:focus, select:focus, textarea:focus {
                    <input type="text" id="nme_local" name="nme_local" maxlength="50" required value={{local.nme_local}}>
                </div>
                <div class="form-group">
-                   <label for="cod_setor">Código do Setor:</label>
-                   <input type="text" name="cod_setor" id="cod_setor" value={{local.cod_setor}} readonly>
+                   <label for="cod_setor">Setor:</label>
+                   <select id="cod_setor" name="cod_setor" required>
+                       {% for setor in lst_setores %}
+                           <option value="{{ setor.idt_setor }}"
+                                   {% if setor.idt_setor == local.cod_setor %}selected{% endif %}>
+                               {{ setor.sgl_setor }}-{{ setor.nme_setor }}
+                           </option>
+                       {% endfor %}
+                   </select>
                </div>
                <div class="form-group">
                    <label for="lat_local">Latitude:</label>
@@ -284,10 +291,12 @@ input:focus, select:focus, textarea:focus {
                    <label>Status:</label>
                    <div class="radio-group">
                        <label for="sts_ativo">
-                           <input type="radio" id="sts_ativo" name="sts_local" value="A" required checked> Ativo
+                           <input type="radio" id="sts_ativo" name="sts_local" value="A"
+                                  {% if local.sts_local =='A' %}checked{% endif %} required> Ativo (Disponível para uso)
                        </label>
                        <label for="sts_inativo">
-                           <input type="radio" id="sts_inativo" name="sts_local" value="I" required> Inativo
+                           <input type="radio" id="sts_inativo" name="sts_local" value="I"
+                                  {% if local.sts_local =='I' %}checked{% endif %} required> Inativo
                        </label>
                    </div>
                </div>

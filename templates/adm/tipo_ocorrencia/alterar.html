@@ -273,13 +273,15 @@ input:focus, select:focus, textarea:focus {
                    <textarea type="text" id="txt_modelo_ocorrencia" name="txt_modelo_ocorrencia" maxlength="50" value="{{ tipo_ocorrencia.txt_modelo_ocorrencia }}" required></textarea>
                </div>
                <div class="form-group">
-                   <label>Status:</label>
+                   <label>Tipo:</label>
                    <div class="radio-group">
                        <label for="tpo_tipo_ocorrencia_empregado">
-                           <input type="radio" id="tpo_tipo_ocorrencia_empregado" name="tpo_tipo_ocorrencia" value="E" required checked> Ocorrência Para Solicitantes
+                           <input type="radio" id="tpo_tipo_ocorrencia_empregado" name="tpo_tipo_ocorrencia" value="E"
+                                  {% if tipo_ocorrencia.tpo_tipo_ocorrencia == 'E' %}checked{% endif %} required> Ocorrência Para Solicitantes
                        </label>
                        <label for="tpo_tipo_ocorrencia_prestador">
-                           <input type="radio" id="tpo_tipo_ocorrencia_prestador" name="tpo_tipo_ocorrencia" value="P" required> Ocorrência para Prestadores
+                           <input type="radio" id="tpo_tipo_ocorrencia_prestador" name="tpo_tipo_ocorrencia" value="P"
+                                  {% if tipo_ocorrencia.tpo_tipo_ocorrencia == 'P' %}checked{% endif %} required> Ocorrência para Prestadores
                        </label>
                    </div>
                </div>
@@ -287,10 +289,12 @@ input:focus, select:focus, textarea:focus {
                    <label>Status:</label>
                    <div class="radio-group">
                        <label for="sts_ativo">
-                           <input type="radio" id="sts_ativo" name="sts_tipo_ocorrencia" value="A" required checked> Ativo (Disponível para uso)
+                           <input type="radio" id="sts_ativo" name="sts_tipo_ocorrencia" value="A"
+                                  {% if tipo_ocorrencia.sts_tipo_ocorrencia == 'A' %}checked{% endif %} required> Ativo (Disponível para uso)
                        </label>
                        <label for="sts_inativo">
-                           <input type="radio" id="sts_inativo" name="sts_tipo_ocorrencia" value="I" required> Inativo
+                           <input type="radio" id="sts_inativo" name="sts_tipo_ocorrencia" value="I"
+                                  {% if tipo_ocorrencia.sts_tipo_ocorrencia == 'I' %}checked{% endif %} required> Inativo
                        </label>
                    </div>
                </div>

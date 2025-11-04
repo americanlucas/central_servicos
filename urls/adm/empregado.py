@@ -47,7 +47,7 @@ def consultar():
 def roda_consultar():
     # TRY
     nme_empregado = request.form["nme_empregado"]
-    filtro_usado = f"Nome do Empregado: {nme_empregado}"
+    filtro_usado = f'Nome do Empregado: {nme_empregado or "Não informado"}'
     dao = EmpregadoDAO()
     empregado = dao.read_by_like("nme_empregado", nme_empregado)
 
@@ -100,7 +100,7 @@ def atualizar():
 @empregado_bp.route('/roda_atualizar', methods=['POST'])  # /adm/empregado/rodar_atualizar
 def roda_atualizar():
     nme_empregado = request.form['nme_empregado']
-    filtro_usado = f'Nome do Empregado: {nme_empregado}'
+    filtro_usado = f'Nome do Empregado: {nme_empregado or "Não informado"}'
     dao = EmpregadoDAO()
     empregado = dao.read_by_like('nme_empregado', nme_empregado)
     return render_template('adm/empregado/atualizar.html', empregado=empregado, filtro_usado=filtro_usado)

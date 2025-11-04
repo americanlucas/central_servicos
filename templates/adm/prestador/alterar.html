@@ -290,16 +290,25 @@ input:focus, select:focus, textarea:focus {
                </div>
                <div class="form-group">
                    <label for="cod_setor">Setor:</label>
-                   <input type="text" id="cod_setor" name="cod_setor" value="{{ prestador.cod_setor }}" readonly >
+                   <select id="cod_setor" name="cod_setor" required>
+                       {% for setor in lst_setores %}
+                           <option value="{{ setor.idt_setor }}"
+                                   {% if setor.idt_setor == prestador.cod_setor %}selected{% endif %}>
+                               {{ setor.sgl_setor }}-{{ setor.nme_setor }}
+                           </option>
+                       {% endfor %}
+                   </select>
                </div>
                <div class="form-group">
                    <label>Status:</label>
                    <div class="radio-group">
                        <label for="sts_ativo">
-                           <input type="radio" id="sts_ativo" name="sts_prestador" value="A" required checked> Ativo
+                           <input type="radio" id="sts_ativo" name="sts_prestador" value="A"
+                                  {% if prestador.sts_prestador =='A' %}checked{% endif %} required> Ativo (Disponível para uso)
                        </label>
                        <label for="sts_inativo">
-                           <input type="radio" id="sts_inativo" name="sts_prestador" value="I" required> Inativo
+                           <input type="radio" id="sts_inativo" name="sts_prestador" value="I"
+                                  {% if prestador.sts_prestador =='I' %}checked{% endif %} required> Inativo
                        </label>
                    </div>
                </div>
